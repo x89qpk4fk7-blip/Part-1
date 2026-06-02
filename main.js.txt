@@ -1,0 +1,313 @@
+// ============================================
+// TSHIDI'S SPAZA - SIMPLE JS FOR FORMS & MESSAGES
+// Made for a real spaza shop in Diepkloof, Soweto
+// ============================================
+
+// Wait for everything to load first
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // ------------------------------------------------------
+    // CATERING FORM - for funerals, parties, stokvels
+    // ------------------------------------------------------
+    const cateringForm = document.getElementById('cateringForm');
+    
+    if (cateringForm) {
+        cateringForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Don't actually send anywhere yet
+            
+            // Grab what the user typed
+            const name = document.getElementById('name').value.trim();
+            const eventDate = document.getElementById('eventDate').value;
+            const people = document.getElementById('people').value;
+            const budget = document.getElementById('budget').value;
+            const message = document.getElementById('message').value.trim();
+            
+            // Check if they forgot their name
+            if (name === '') {
+                showMessage('Hhayi shame, please tell us your name so Tshidi knows who to call.', 'error', cateringForm);
+                return;
+            }
+            
+            // Name too short?
+            if (name.length < 3) {
+                showMessage('Your name is a bit short hey? Please use your full name.', 'error', cateringForm);
+                return;
+            }
+            
+            // Did they pick a date?
+            if (eventDate === '') {
+                showMessage('When is your event? Tshidi needs to check her calendar.', 'error', cateringForm);
+                return;
+            }
+            
+            // Check if they picked a date that already passed
+            const selectedDate = new Date(eventDate);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            if (selectedDate < today) {
+                showMessage('Eish, that date has already passed. Please pick a future date for your event.', 'error', cateringForm);
+                return;
+            }
+            
+            // How many people coming?
+            if (people === '') {
+                showMessage('How many people are you feeding? Tshidi needs to know how much food to cook.', 'error', cateringForm);
+                return;
+            }
+            
+            if (people < 1) {
+                showMessage('At least 1 person? Even if it\'s just you, we can cook!', 'error', cateringForm);
+                return;
+            }
+            
+            if (people > 500) {
+                showMessage('Woza! That\'s a big event. For 500+ people, better call Tshidi directly on 072 123 4567.', 'error', cateringForm);
+                return;
+            }
+            
+            // Budget check - no funny business
+            if (budget !== '' && budget < 100) {
+                showMessage('Catering starts from R100. Even for a small family gathering. Please adjust your budget.', 'error', cateringForm);
+                return;
+            }
+            
+            // All good! Send the message
+            const successMessage = `Sharp sharp ${name}! Your catering inquiry is in. Tshidi will WhatsApp you within 24 hours with a quote.`;
+            showMessage(successMessage, 'success', cateringForm);
+            
+            // Clear the form so they can start fresh
+            cateringForm.reset();
+            
+            // Scroll up so they can see the "thank you" message
+            cateringForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+    }
+    
+    // ------------------------------------------------------
+    // DELIVERY FORM - for people who can't come to the shop
+    // ------------------------------------------------------
+    const deliveryForm = document.getElementById('deliveryForm');
+    
+    if (deliveryForm) {
+        deliveryForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Get what they typed
+            const name = document.getElementById('deliveryName').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const items = document.getElementById('items').value.trim();
+            const time = document.getElementById('time').value.trim();
+            
+            // Did they give their name?
+            if (name === '') {
+                showMessage('Yoh, we can\'t deliver to "Unknown Person". Please share your name.', 'error', deliveryForm);
+                return;
+            }
+            
+            if (name.length < 3) {
+                showMessage('Please use your full name so the driver knows who to look for.', 'error', deliveryForm);
+                return;
+            }
+            
+            // Do we know where to go?
+            if (address === '') {
+                showMessage('Where do you stay? Tshidi\'s driver needs an address.', 'error', deliveryForm);
+                return;
+            }
+            
+            if (address.length < 10) {
+                showMessage('Please give more details: street name, extension number, maybe a landmark like "next to the clinic".', 'error', deliveryForm);
+                return;
+            }
+            
+            // Phone number - very important!
+            if (phone === '') {
+                showMessage('We need your number so Tshidi can call you when the driver is outside.', 'error', deliveryForm);
+                return;
+            }
+            
+            // Check if it's a real SA number (10 digits)
+            const cleanedPhone = phone.replace(/\D/g, '');
+            if (cleanedPhone.length !== 10) {
+                showMessage('That number doesn\'t look right. Please use a 10-digit SA number like 0721234567.', 'error', deliveryForm);
+                return;
+            }
+            
+            // What do they want to buy?
+            if (items === '') {
+                showMessage('What do you need? Bread? Milk? Airtime? Let Tshidi know.', 'error', deliveryForm);
+                return;
+            }
+            
+            if (items.length < 5) {
+                showMessage('Please be a bit more specific. Like "2 loaves of brown bread and 1 litre of milk".', 'error', deliveryForm);
+                return;
+            }
+            
+            // Check if they're in Diepkloof (our area)
+            const lowerAddress = address.toLowerCase();
+            if (!lowerAddress.includes('diepkloof')) {
+                const confirmArea = confirm('Just checking... we only deliver in Diepkloof Extensions 1, 2, 3, and 4. Are you in one of these areas? Click OK if yes, Cancel if not sure.');
+                if (!confirmArea) {
+                    return;
+                }
+            }
+            
+            // All good! Order received
+            let successMessage = `Awe ${name}! Your delivery order is in. Tshidi will call you on ${phone} within 30 minutes to confirm. `;
+            
+            if (time !== '') {
+                successMessage += `You said you need it: ${time}. Tshidi will try her best. `;
+            }
+            
+            successMessage += `If it's urgent, call her on 072 123 4567.`;
+            
+            showMessage(successMessage, 'success', deliveryForm);
+            
+            // Clear the form
+            deliveryForm.reset();
+            
+            // Scroll up
+            deliveryForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+    }
+    
+    // ------------------------------------------------------
+    // SMALL TOUCHES - real-time feedback while typing
+    // Makes the form feel more friendly
+    // ------------------------------------------------------
+    
+    // For catering form - name field turns green when it's long enough
+    if (cateringForm) {
+        const nameField = document.getElementById('name');
+        const peopleField = document.getElementById('people');
+        
+        if (nameField) {
+            nameField.addEventListener('input', function() {
+                if (this.value.trim().length >= 3) {
+                    this.style.borderColor = 'green';
+                } else {
+                    this.style.borderColor = '#ccc';
+                }
+            });
+        }
+        
+        if (peopleField) {
+            peopleField.addEventListener('input', function() {
+                const value = parseInt(this.value);
+                if (value >= 1 && value <= 500) {
+                    this.style.borderColor = 'green';
+                } else {
+                    this.style.borderColor = '#ccc';
+                }
+            });
+        }
+    }
+    
+    // For delivery form - phone number turns green when it looks right
+    if (deliveryForm) {
+        const phoneField = document.getElementById('phone');
+        
+        if (phoneField) {
+            phoneField.addEventListener('input', function() {
+                const cleaned = this.value.replace(/\D/g, '');
+                if (cleaned.length === 10) {
+                    this.style.borderColor = 'green';
+                } else {
+                    this.style.borderColor = '#ccc';
+                }
+            });
+        }
+    }
+    
+    // ------------------------------------------------------
+    // SMOOTH SCROLLING - just makes it feel nicer
+    // ------------------------------------------------------
+    const navLinks = document.querySelectorAll('nav a');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            // Only do smooth scroll if it's an anchor link on the same page
+            const hash = this.getAttribute('href');
+            if (hash.startsWith('#') && hash !== '#') {
+                event.preventDefault();
+                const targetElement = document.querySelector(hash);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+            // For links to other pages like prices.html, just let the browser handle it
+        });
+    });
+    
+    // ------------------------------------------------------
+    // HELPER FUNCTION - shows friendly messages to the user
+    // Red for errors, green for success
+    // ------------------------------------------------------
+    function showMessage(message, type, formElement) {
+        // Remove any old message first
+        const existingMessage = formElement.querySelector('.form-message');
+        if (existingMessage) {
+            existingMessage.remove();
+        }
+        
+        // Make a new message box
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `form-message ${type}`;
+        messageDiv.textContent = message;
+        
+        // Style it nicely
+        if (type === 'error') {
+            messageDiv.style.backgroundColor = '#ffebee';
+            messageDiv.style.color = '#c62828';
+            messageDiv.style.border = '1px solid #ef9a9a';
+        } else {
+            messageDiv.style.backgroundColor = '#e8f5e9';
+            messageDiv.style.color = '#2e7d32';
+            messageDiv.style.border = '1px solid #a5d6a7';
+        }
+        
+        messageDiv.style.padding = '12px';
+        messageDiv.style.marginBottom = '15px';
+        messageDiv.style.borderRadius = '8px';
+        messageDiv.style.fontWeight = 'bold';
+        messageDiv.style.textAlign = 'center';
+        
+        // Put it at the top of the form
+        formElement.insertBefore(messageDiv, formElement.firstChild);
+        
+        // Success messages disappear after a little while (8 seconds)
+        if (type === 'success') {
+            setTimeout(function() {
+                if (messageDiv && messageDiv.remove) {
+                    messageDiv.style.opacity = '0';
+                    messageDiv.style.transition = 'opacity 0.5s';
+                    setTimeout(function() {
+                        if (messageDiv && messageDiv.remove) {
+                            messageDiv.remove();
+                        }
+                    }, 500);
+                }
+            }, 8000);
+        } else {
+            // Error messages disappear a bit faster (5 seconds)
+            setTimeout(function() {
+                if (messageDiv && messageDiv.remove) {
+                    messageDiv.style.opacity = '0';
+                    messageDiv.style.transition = 'opacity 0.5s';
+                    setTimeout(function() {
+                        if (messageDiv && messageDiv.remove) {
+                            messageDiv.remove();
+                        }
+                    }, 500);
+                }
+            }, 5000);
+        }
+    }
+    
+    // Small console message just for fun (won't bother users)
+    console.log('Tshidi\'s Spaza website is ready! Lekker.');
+    
+});

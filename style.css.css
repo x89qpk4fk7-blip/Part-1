@@ -1,0 +1,230 @@
+/* ============================================
+   CSS RESET - kills default margins/paddings
+   ============================================ */
+* {     margin: 0;     padding: 0;
+    box-sizing: border-box; }
+/* ============================================
+   BASE STYLES - cascades to ALL elements
+   ============================================ */ body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;     background: #ffffff;     color: #333333;     line-height: 1.6;
+    font-size: 100%; /* 16px default - using % for responsiveness */ }
+/* ============================================
+   TYPOGRAPHY STYLES
+   Uses rem units for accessibility
+   ============================================ */ h1, h2, h3, h4 {     line-height: 1.2;     letter-spacing: -0.5px;
+    margin-bottom: 0.5rem;
+}
+h1 {     font-size: 1.8rem;     font-weight: 700;
+}
+h2 {
+    font-size: 1.8rem;     font-weight: 600;     color: #E65100;     letter-spacing: -0.3px;     margin-bottom: 1rem; }
+h3 {
+    font-size: 1.4rem;     font-weight: 600;     letter-spacing: -0.2px;
+}
+p {     font-size: 1rem;     line-height: 1.6;     letter-spacing: 0.3px;     margin-bottom: 1rem; }
+/* ============================================
+   HEADER & NAVIGATION
+   ============================================ */ header {     background: #F9A825;     padding: 1rem;     position: sticky;     top: 0;     z-index: 100; }
+.container {     max-width: 1200px;     margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;     flex-wrap: wrap;
+}
+nav ul {     display: flex;     gap: 1.5rem;     list-style: none;
+}
+nav a {     color: #333333;     text-decoration: none;     font-weight: bold;     padding: 0.5rem;     transition: color 0.3s ease; }
+/* PSEUDO-CLASSES for interactivity */ nav a:hover {     color: #E65100;
+}
+nav a:focus {
+    outline: 2px solid #E65100;     outline-offset: 4px;     border-radius: 4px;
+}
+nav a:active {     color: #bf360c; }
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.hero {
+    background: #E65100;     color: white;     text-align: center;     padding: 3rem 1rem; }
+.hero h2 {     color: white;     font-size: 2rem;
+    margin-bottom: 0.5rem; }
+/* ============================================
+   BUTTONS - big and easy to tap    ============================================ */
+.btn-whatsapp, .btn-call {     display: inline-block;     padding: 0.75rem 1.5rem;     margin: 0.625rem;     border-radius: 50px;     text-decoration: none;     font-weight: bold;
+    transition: transform 0.3s ease, background 0.3s ease; }
+.btn-whatsapp {     background: #25D366;     color: white; }
+.btn-whatsapp:hover {     background: #128C7E;     transform: scale(1.05); }
+.btn-whatsapp:focus {     outline: 2px solid #128C7E;     outline-offset: 4px; }
+.btn-whatsapp:active {     transform: scale(0.98); }
+.btn-call {     background: #F9A825;     color: #333333; }
+.btn-call:hover {     background: #E65100;     color: white;     transform: scale(1.05);
+}
+.btn-call:focus {     outline: 2px solid #E65100;     outline-offset: 4px; }
+.btn-call:active {     transform: scale(0.98); }
+/* ============================================
+   DAILY SPECIAL BANNER
+   ============================================ */
+.daily-special {     background: #E65100;     color: white;     text-align: center;     padding: 0.625rem;     font-weight: bold; }
+/* ============================================
+   FEATURES / CARDS SECTION
+   Uses FLEXBOX + GRID (desktop uses Grid)
+   ============================================ */
+.features {     display: flex;     gap: 1.5rem;     padding: 2rem;     flex-wrap: wrap;     justify-content: center; }
+.card {
+    background: #FFF8E7;     padding: 1.5rem;     border-radius: 15px;     width: 280px;     text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+.card h3 {
+    margin-bottom: 0.75rem; }
+.card a {     display: inline-block;     margin-top: 1rem;     color: #E65100;     font-weight: bold;     text-decoration: none; }
+.card a:hover {
+    text-decoration: underline; }
+/* ============================================
+   PRICE TABLE
+   ============================================ */ table {     width: 100%;     border-collapse: collapse;     margin: 1.5rem 0;     background: white;
+}
+td, th {     padding: 0.75rem;
+    border-bottom: 1px solid #dddddd;
+}
+th {
+    background: #F9A825;
+    text-align: left;     font-weight: bold; }
+tr:hover {
+    background: #FFF8E7; }
+/* ============================================
+   FORMS
+   ============================================ */ form {
+    display: flex;     flex-direction: column;     gap: 1rem;     max-width: 500px;     margin: 1.5rem 0;     background: #FFF8E7;     padding: 1.5rem;     border-radius: 15px;
+}
+input, textarea, button {     padding: 0.75rem;     border-radius: 8px;     border: 1px solid #cccccc;     font-family: inherit;     font-size: 1rem;
+}
+input:focus, textarea:focus {     outline: 2px solid #F9A825;     border-color: #E65100;
+}
+button {     background: #F9A825;     font-weight: bold;     cursor: pointer;     border: none;
+    transition: background 0.3s ease, transform 0.2s ease; }
+button:hover {     background: #E65100;     color: white;
+}
+button:focus {     outline: 2px solid #E65100;     outline-offset: 2px;
+}
+button:active {     transform: scale(0.98); }
+/* ============================================
+   FOOTER
+   ============================================ */ footer {     background: #333333;     color: white;     text-align: center;     padding: 1rem;     margin-top: 2rem; }
+/* ============================================
+   RESPONSIVE DESIGN - MOBILE FIRST APPROACH
+   ============================================ */
+/* TABLET BREAKPOINT (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .container {         flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    .features {         gap: 1rem;
+        justify-content: center;
+    }
+    
+    .card {         width: 45%;
+        max-width: 280px;
+    }
+    
+    h1 {         font-size: 1.6rem;
+    }
+    
+    h2 {         font-size: 1.6rem;
+    }
+    
+    .hero h2 {         font-size: 1.8rem;
+    }
+}
+/* MOBILE BREAKPOINT (max 767px) */
+@media (max-width: 767px) {
+    .container {         flex-direction: column;
+        text-align: center;
+    }
+    
+    nav ul {         flex-direction: column;         gap: 0.5rem;
+        margin-top: 1rem;
+    }
+    
+    .features {         flex-direction: column;
+        align-items: center;
+    }
+    
+    .card {         width: 90%;
+        max-width: 320px;
+    }
+    
+    .hero h2 {         font-size: 1.5rem;
+    }
+    
+    .hero p {
+        font-size: 0.95rem;
+    }
+    
+    .btn-whatsapp, .btn-call {         display: block;         margin: 0.625rem auto;         width: 80%;
+        text-align: center;
+    }
+    
+    table {
+        font-size: 0.85rem;
+    }
+    
+    td, th {
+        padding: 0.5rem;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    h2 {
+        font-size: 1.4rem;
+    }
+    
+    form {         width: 90%;
+        padding: 1rem;
+    }
+}
+/* ============================================
+   DESKTOP GRID LAYOUT (min 1024px)
+   Multi-column layout switches to Grid
+   ============================================ */ @media (min-width: 1024px) {
+    .features {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;         max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .card {         width: 100%;
+        max-width: none;
+    }
+    
+    .container {         max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    main {         max-width: 1200px;         margin: 0 auto;
+        padding: 0 1rem;
+    }
+    
+    table {         max-width: 800px;
+        margin: 1.5rem auto;
+    }
+}
+/* ============================================
+   RESPONSIVE IMAGES READY
+   For use with srcset in HTML
+   ============================================ */ img {     max-width: 100%;     height: auto; }
+/* ============================================    MAP IFRAME RESPONSIVE
+   ============================================ */ iframe {     max-width: 100%;     height: auto; }
+/* ============================================
+   ADDITIONAL UTILITIES
+   ============================================ */
+.text-center {     text-align: center; }
+.mt-2 {
+    margin-top: 2rem; }
+.mb-2 {
+    margin-bottom: 2rem;
+}
